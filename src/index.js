@@ -17,8 +17,8 @@ const DEBOUNCE_DELAY = 300;
 const renderList = countries => {
   if (countries.message) return false;
   const markup = countries
-    .map(country => {
-      return `<li><img src="${country.flag}" alt="${country.name}">${country.name}</li>`;
+    .map(({ flag, name }) => {
+      return `<li><img src="${flag}" alt="${name}">${name}</li>`;
     })
     .join('');
   refs.div.innerHTML = '';
@@ -27,11 +27,11 @@ const renderList = countries => {
 
 const renderOneCountry = countries => {
   const markup = countries
-    .map(country => {
-      return `<h2><img src="${country.flag}" alt="${country.name}">${country.name}</h2>
-        <p><span>Capital:</span>${country.capital}</p>
-        <p><span>Population:</span>${country.population}</p>
-        <p><span>Languages :</span>${country.languages.map(lang => lang.name)}</p>`;
+    .map(({ flag, name, capital, population, languages }) => {
+      return `<h2><img src="${flag}" alt="${name}">${name}</h2>
+        <p><span>Capital:</span>${capital}</p>
+        <p><span>Population:</span>${population}</p>
+        <p><span>Languages :</span>${languages.map(lang => lang.name)}</p>`;
     })
     .join('');
   refs.ul.innerHTML = '';
