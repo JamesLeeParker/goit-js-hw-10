@@ -21,7 +21,7 @@ const renderList = countries => {
       return `<li><img src="${flag}" alt="${name}">${name}</li>`;
     })
     .join('');
-  refs.div.innerHTML = '';
+  resetTags();
   refs.ul.innerHTML = markup;
 };
 
@@ -34,7 +34,7 @@ const renderOneCountry = countries => {
         <p><span>Languages :</span>${languages.map(lang => lang.name)}</p>`;
     })
     .join('');
-  refs.ul.innerHTML = '';
+  resetTags();
   refs.div.innerHTML = markup;
 };
 
@@ -44,15 +44,18 @@ const searchCountry = e => {
     Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
   } else {
     fetchCountries(serchingCountry).then(countries => {
-      console.log(countries);
       if (countries.length === 1) renderOneCountry(countries);
       else if (countries.status === 404) {
-        refs.ul.innerHTML = '';
-        refs.div.innerHTML = '';
+        resetTags();
         Notiflix.Notify.failure('Oops, there is no country with that name');
       } else renderList(countries);
     });
   }
+};
+
+const resetTags = () => {
+  refs.div.innerHTML = '';
+  refs.ul.innerHTML = '';
 };
 
 refs.input.addEventListener('input', debounce(searchCountry, DEBOUNCE_DELAY));
